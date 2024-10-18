@@ -91,6 +91,24 @@ with col2:
     """
   )
 
+  median_pm25 = dataset.groupby('station')['PM2.5'].median().sort_values(ascending=False).reset_index()
+
+  sns.barplot(data=median_pm25, x='station', y='PM2.5')
+  plt.xlabel('Station')
+  plt.ylabel('Median PM2.5')
+  plt.xticks(rotation=45)
+  st.pyplot(plt)
+  plt.close()
+
+  st.write(
+     """
+    Nilai median tingkat PM2.5 digunakan untuk menentukan stasiun dengan kualitas udara terburuk. Nilai median dipilih daripada nilai 
+    mean karena terdapat banyak outlier dan distribusi data yang sangat tidak simetris. Berdasarkan barplot, **stasiun dengan median 
+    tingkat PM2.5 tertinggi adalah Dongsi**. Stasiun ini kemudian dipilih untuk membandingkan tingkat variasi dari masing-masing polutan 
+    untuk menemukan polutan dengan tingkat variasi tertinggi.
+    """
+  )
+
   station = st.selectbox(
       label="Select Station",
       options=(x for x in dataset["station"].unique()),
